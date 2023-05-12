@@ -1,6 +1,6 @@
 <?php
     /**
-     *New Comment2
+     *New Comment3
      * GIT DEPLOYMENT SCRIPT
      *
      * Used for automatically deploying websites via GitHub
