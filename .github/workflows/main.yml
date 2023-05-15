@@ -21,8 +21,7 @@ jobs:
         with:
           node-version: 16
       - name: install-node-modules
-        run: npm i
-        run: npm install pm2 -g
+        run: npm i & npm install pm2 -g  
 #      - name: auto-format-code
 #        run: npm run format
 #      - name: commit-and-push
