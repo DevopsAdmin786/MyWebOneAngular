@@ -11,17 +11,22 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: dev-instance
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:       
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
+    - name: setup-node-js
+        uses: actions/setup-node@v3
       with:
+        node-version: 16
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
+        - name: install-node-modules
+          run: npm i
           cd /home/ubuntu/SDR/MyWebOneAngular
           git pull origin main
           git status
