@@ -8,28 +8,29 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    # can on GitHub infrastructure if set to ubuntu-latest and our own infrastructure if set to self-hosted
     runs-on: dev-instance
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:       
-    - name: Deploy using ssh
-      uses: appleboy/ssh-action@master
-    - name: setup-node-js
+    # steps for continuous integration
+    steps:
+      - name: clone-this-repo
+        # to clone use actions GitHub account checkout repo release tag v3
+        uses: actions/checkout@v3
+      - name: setup-node-js
         uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-        - name: install-node-modules
-          run: npm i
-          cd /home/ubuntu/SDR/MyWebOneAngular
-          git pull origin main
-          git status
-          #npm install --only=prod
-          #npm install 
-          #ng build
+        with:
+          node-version: 16
+      - name: install-node-modules
+        run: npm i
+#      - name: auto-format-code
+#        run: npm run format
+#      - name: commit-and-push
+#        uses: EndBug/add-and-commit@v9
+#        with:
+#         default_author: github_actions
+      - name: restart-express-server
+        run: pm2 restart SDR
+      - name: Make angular build
+        run: ng build
+        # run unit tests using mocha chai
+        # run linting checks using eslint
