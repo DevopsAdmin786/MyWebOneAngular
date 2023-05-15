@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     # can on GitHub infrastructure if set to ubuntu-latest and our own infrastructure if set to self-hosted
-    runs-on: dev-instance
+    runs-on: ubuntu-latest
     # steps for continuous integration
     steps:
       - name: clone-this-repo
